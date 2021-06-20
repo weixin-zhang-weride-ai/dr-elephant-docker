@@ -1,7 +1,7 @@
 FROM centos:7
 
-ENV HADOOP_VERSION	2.7.1
-ENV SPARK_VERSION	1.6.0
+ENV HADOOP_VERSION	2.7.3
+ENV SPARK_VERSION	1.6.2
 ENV HADOOP_HOME		/usr/local/hadoop
 ENV PATH		$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH:/activator-dist-1.3.9/bin
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0
@@ -20,7 +20,7 @@ RUN wget http://archive.apache.org/dist/hadoop/core/hadoop-$HADOOP_VERSION/hadoo
     rm /hadoop-$HADOOP_VERSION.tar.gz && mv hadoop-$HADOOP_VERSION /usr/local/hadoop && mkdir -p /usr/local/hadoop/logs 
 
 # Dr Elephant Instalation
-RUN git clone https://github.com/linkedin/dr-elephant.git dr-elephant-sources
+RUN git clone https://github.com/weixin-zhang-weride-ai/dr-elephant.git dr-elephant-sources
 RUN sed -i "s/hadoop_version=.*/hadoop_version=$HADOOP_VERSION/g" /dr-elephant-sources/compile.conf
 RUN sed -i "s/spark_version=.*/spark_version=$SPARK_VERSION/g" /dr-elephant-sources/compile.conf
 RUN cat /dr-elephant-sources/compile.conf

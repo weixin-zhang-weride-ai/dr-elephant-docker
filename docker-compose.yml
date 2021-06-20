@@ -9,9 +9,11 @@ volumes:
 services: 
  dr-elephant-mysql:
   image: mysql:5.7
+  command: --max_allowed_packet=256M --max_connections=400
   environment: 
      MYSQL_DATABASE: drelephant
      MYSQL_ROOT_PASSWORD: drelephant
+  restart: always
   volumes: 
    - mysql-data:/var/lib/mysql
 
