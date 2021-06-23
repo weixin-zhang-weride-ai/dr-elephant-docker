@@ -1,8 +1,9 @@
 FROM centos:7
 
 ENV HADOOP_VERSION	2.7.3
-ENV SPARK_VERSION	1.6.2
+ENV SPARK_VERSION	2.2.0
 ENV HADOOP_HOME		/usr/local/hadoop
+ENV SPARK_HOME      /opt/spark
 ENV PATH		$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH:/activator-dist-1.3.9/bin
 ENV JAVA_HOME /usr/lib/jvm/java-1.8.0
 ENV HADOOP_CONF_DIR=$HADOOP_HOME/etc/hadoop
@@ -17,7 +18,11 @@ RUN unzip typesafe-activator-1.3.9.zip
 
 # Hadoop Installation
 RUN wget http://archive.apache.org/dist/hadoop/core/hadoop-$HADOOP_VERSION/hadoop-$HADOOP_VERSION.tar.gz  && tar -zxf /hadoop-$HADOOP_VERSION.tar.gz && \
-    rm /hadoop-$HADOOP_VERSION.tar.gz && mv hadoop-$HADOOP_VERSION /usr/local/hadoop && mkdir -p /usr/local/hadoop/logs 
+    rm /hadoop-$HADOOP_VERSION.tar.gz && mv hadoop-$HADOOP_VERSION ${HADOOP_HOME} && mkdir -p ${HADOOP_HOME}/logs 
+
+# # Spark Installation
+RUN wget https://d3kbcqa49mib13.cloudfront.net/spark-${SPARK_VERSION}-bin-without-hadoop.tgz && tar -zxvf spark-${SPARK_VERSION}-bin-without-hadoop.tgz && \
+    mv spark-${SPARK_VERSION}-bin-without-hadoop ${SPARK_HOME}
 
 # Dr Elephant Instalation
 RUN git clone https://github.com/weixin-zhang-weride-ai/dr-elephant.git dr-elephant-sources
@@ -29,6 +34,7 @@ RUN cd /dr-elephant-sources && ./compile.sh compile.conf &&  cd dist && unzip dr
 # POST Installation
 RUN sed -i 's#/dev/null#$project_root/logs/out#' /dr-elephant/bin/start.sh && mkdir -p /dr-elephant/app-conf && cp /dr-elephant-sources/app-conf/* /dr-elephant/app-conf
 
+COPY elephant.conf /dr-elephant/app-conf
 COPY entrypoint.sh /
 COPY start.sh /
 
