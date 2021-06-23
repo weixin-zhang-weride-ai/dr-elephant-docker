@@ -1,7 +1,7 @@
 FROM centos:7
 
 ENV HADOOP_VERSION	2.7.3
-ENV SPARK_VERSION	2.2.0
+ENV SPARK_VERSION	1.6.2
 ENV HADOOP_HOME		/usr/local/hadoop
 ENV SPARK_HOME      /opt/spark
 ENV PATH		$PATH:$HADOOP_HOME/bin:$HADOOP_HOME/sbin:$PATH:/activator-dist-1.3.9/bin

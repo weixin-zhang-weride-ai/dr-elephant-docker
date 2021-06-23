@@ -21,7 +21,7 @@ services:
   build: 
     context: frontend/.
   ports: 
-  - 9000:9000
+  - 9000:8080
   stdin_open: true
   depends_on:
   - dr-elephant-mysql
