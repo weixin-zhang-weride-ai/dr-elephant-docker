@@ -1,8 +1,8 @@
 version: '2'
 
 volumes:
-  mysql-data:
-    external: false
+  # mysql-data:
+  #   external: false
   dr-elephant-logs:
     external: false
 
@@ -14,8 +14,8 @@ services:
      MYSQL_DATABASE: drelephant
      MYSQL_ROOT_PASSWORD: drelephant
   restart: always
-  volumes: 
-   - mysql-data:/var/lib/mysql
+  # volumes: 
+  #  - mysql-data:/var/lib/mysql
 
  dr-elephant:
   build: 
