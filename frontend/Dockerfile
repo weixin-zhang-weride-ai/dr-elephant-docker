@@ -25,7 +25,7 @@ RUN wget https://d3kbcqa49mib13.cloudfront.net/spark-${SPARK_VERSION}-bin-withou
     mv spark-${SPARK_VERSION}-bin-without-hadoop ${SPARK_HOME}
 
 # Dr Elephant Instalation
-RUN git clone https://github.com/weixin-zhang-weride-ai/dr-elephant.git dr-elephant-sources
+COPY dr-elephant/ /dr-elephant-sources/
 RUN sed -i "s/hadoop_version=.*/hadoop_version=$HADOOP_VERSION/g" /dr-elephant-sources/compile.conf
 RUN sed -i "s/spark_version=.*/spark_version=$SPARK_VERSION/g" /dr-elephant-sources/compile.conf
 RUN cat /dr-elephant-sources/compile.conf
